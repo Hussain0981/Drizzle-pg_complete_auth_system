@@ -11,7 +11,7 @@
     "db:generate": "drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
-    "db:drop" : "drizzle-kit drop"
+    "db:drop": "drizzle-kit drop"
   },
   "keywords": [
     "node",
@@ -28,11 +28,11 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "drizzle-orm": "^0.30.0",
+    "drizzle-orm": "^0.45.1",
     "ejs": "^3.1.9",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
-    "pg": "^8.11.5"
+    "pg": "^8.20.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -41,8 +41,8 @@
     "@types/express": "^4.17.21",
     "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20.11.30",
-    "@types/pg": "^8.18.0",
-    "drizzle-kit": "^0.20.0",
+    "@types/pg": "^8.20.0",
+    "drizzle-kit": "^0.31.10",
     "tsx": "^4.7.1",
     "typescript": "^5.4.5"
   }

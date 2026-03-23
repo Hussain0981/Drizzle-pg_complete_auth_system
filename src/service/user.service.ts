@@ -1,5 +1,5 @@
 import { db } from "../config/db";
-import { UserOtp, UserTable } from "../db/schema";
+import { UserOtp, UserTable } from "../db/schema/schema";
 import { User, UserLogin } from '../types/user';
 import { hashData, compareData, generateOtp } from '../utils/auth';
 import { eq } from "drizzle-orm";
@@ -61,6 +61,7 @@ export const login = async (payload: UserLogin) => {
 export const resendOTP = async (email: string) => {
     const user = await db.query.UserTable.findFirst({
         where: eq(UserTable.email, email.toLowerCase()),
+        with:
     });
 
     if (!user) throw new Error('User not found');
@@ -68,10 +69,13 @@ export const resendOTP = async (email: string) => {
     const rawOtp = generateOtp();
     const hashedOtp = await hashData(rawOtp);
 
+
+
     await db.insert(UserOtp).values({
         userId: user.id,
         hashedOtp: hashedOtp,
         otpExpiry: getOtpExpiry(),
+        retryAttempts: retryAttempts + 1
     });
 
     return { message: "OTP sent successfully" };
