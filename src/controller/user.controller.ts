@@ -4,10 +4,10 @@ import { createUser } from '../service/users/registerUser'
 import { login } from '../service/users/loginUser'
 import { verifyOtp } from '../service/users/verifyUser'
 
-export const createUser = async (req: Request, res: Response) => {
+export const create = async (req: Request, res: Response) => {
     try {
         const payload: User = req.body
-        const user = await service.createUser(payload);
+        const user = await createUser(payload);
 
         res.status(201).json({
             success: true,

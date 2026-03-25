@@ -15,6 +15,10 @@ export const resendOTP = async (email: string) => {
 
     });
     if (!user) throw new Error('User not found');
+
+    const rawOtp = generateOtp();
+    const hashedOtp = await hashData(rawOtp);
+
     const existingOtp = await db.query.usersOtp.findFirst({
         where: eq(usersOtp.userId, user.id),
     });
@@ -22,8 +26,7 @@ export const resendOTP = async (email: string) => {
         throw new Error('Your are temporary blocked please try again later')
     }
 
-    const rawOtp = generateOtp();
-    const hashedOtp = await hashData(rawOtp);
+    
 
     let counter;
     if (existingOtp) {
