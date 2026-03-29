@@ -18,7 +18,7 @@ export async function verifyUser(userId: number, inputOtp: string) {
 
   const isMatch = await compareData(inputOtp, otpRecord.hashedOtp);
 
-  if(!isMatch) {
+  if (!isMatch) {
     throw new Error('Your otp is not correct')
   }
 
