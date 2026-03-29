@@ -38,6 +38,7 @@ export const usersOtp = pgTable("users_otp", {
   blockedUntil: timestamp(),     
   retryAttempts: integer().notNull().default(0),
   otpExpiry: timestamp().notNull(),
+  isVerified: boolean().default(false),
   ...timestamps,
 }, (table) => [
   index("otp_user_id_idx").on(table.userId),

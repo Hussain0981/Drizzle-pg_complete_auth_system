@@ -1,8 +1,10 @@
 import express from "express";
-import { createUser } from "../controller/user.controller";
+import * as controller from "../controller/user.controller";
 
 const router = express.Router();
 
-router.get("/", createUser);
+router.get("/", controller.createController);
+router.get("/", controller.createController);
+router.get("/", controller.createController);
 
 export default router;

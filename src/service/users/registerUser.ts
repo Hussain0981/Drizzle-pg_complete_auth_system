@@ -15,7 +15,9 @@ export const createUser = async (payload: User) => {
         where: eq(users.email, emailLower),
     });
 
-    if (existingUser) throw new Error('User with this email already exists Please try to login');
+    if (existingUser) {
+        throw new Error('User with this email already exists. Please try to login.');
+    }
 
     const hashedPassword = await hashData(password);
 
@@ -26,21 +28,18 @@ export const createUser = async (payload: User) => {
             password: hashedPassword,
         }).returning();
 
-        // generate OTP
         const rawOtp = generateOtp();
         const hashedOtp = await hashData(rawOtp);
 
-        // save users Data
         await tx.insert(usersOtp).values({
             userId: newUser.id,
-            hashedOtp: hashedOtp,
+            hashedOtp,
             otpExpiry: getOtpExpiry(),
+            retryAttempts: 1,
         });
 
-        await sendOtp(email, rawOtp)
-
-        console.log(`OTP for ${emailLower}: ${rawOtp}`); 
-
-        return newUser;
+        await sendOtp(emailLower, rawOtp);
+        const { password: _, ...safeUser } = newUser;
+        return safeUser;
     });
 };
