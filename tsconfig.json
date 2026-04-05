@@ -6,7 +6,9 @@
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "outDir": "./public/js",
+    "rootDir": "./public/ts"
   },
-  "include": ["src", "public"]
+  "include": ["public/ts/**/*"]
 }

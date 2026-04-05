@@ -5,7 +5,10 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"tsx watch src/index.ts\" \"npx tailwindcss -i public/css/input.css -o public/css/output.css --watch\"",
+    "dev:server": "tsx watch src/index.ts",
+    "dev:css": "npx tailwindcss -i public/css/input.css -o public/css/output.css --watch",
+    "dev:client": "npx tsc --watch",
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:css\" \"npm run dev:client\"",
     "build": "tsc",
     "start": "node dist/index.js",
     "db:generate": "drizzle-kit generate:pg",
