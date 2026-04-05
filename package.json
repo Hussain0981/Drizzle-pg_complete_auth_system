@@ -11,7 +11,7 @@
     "dev": "concurrently \"npm run dev:server\" \"npm run dev:css\" \"npm run dev:client\"",
     "build": "tsc",
     "start": "node dist/index.js",
-    "db:generate": "drizzle-kit generate:pg",
+    "db:generate": "npx drizzle-kit generate:pg",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
     "db:drop": "drizzle-kit drop",

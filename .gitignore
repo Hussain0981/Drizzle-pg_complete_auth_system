@@ -5,3 +5,6 @@ node_modules/
 
 src/public/css/output.css
 dist/
+
+public/js
+public/css/output.css

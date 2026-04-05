@@ -1,5 +1,5 @@
 {
-  "id": "69118c23-9a32-4e57-9624-d1c2defdb59c",
+  "id": "ba53217f-23fd-47c6-813b-3ba2d70d69ec",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -10,9 +10,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "serial",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -22,7 +23,7 @@
         },
         "email": {
           "name": "email",
-          "type": "text",
+          "type": "varchar",
           "primaryKey": false,
           "notNull": true
         },
@@ -40,15 +41,15 @@
           "notNull": true,
           "default": "'User'"
         },
-        "updated_at": {
-          "name": "updated_at",
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "created_at": {
-          "name": "created_at",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -58,8 +59,7 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": false
         }
       },
       "indexes": {
@@ -105,47 +105,60 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "userId": {
-          "name": "userId",
-          "type": "integer",
+        "user_id": {
+          "name": "user_id",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
-        "hashedOtp": {
-          "name": "hashedOtp",
+        "hashed_otp": {
+          "name": "hashed_otp",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
-        "temporaryBlock": {
-          "name": "temporaryBlock",
+        "temporary_block": {
+          "name": "temporary_block",
           "type": "boolean",
           "primaryKey": false,
           "notNull": false,
           "default": false
         },
-        "retryAttempts": {
-          "name": "retryAttempts",
+        "blocked_until": {
+          "name": "blocked_until",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "retry_attempts": {
+          "name": "retry_attempts",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
           "default": 0
         },
-        "otpExpiry": {
-          "name": "otpExpiry",
+        "otp_expiry": {
+          "name": "otp_expiry",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true
         },
-        "updated_at": {
-          "name": "updated_at",
+        "is_verified": {
+          "name": "is_verified",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "created_at": {
+          "name": "created_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
         },
-        "created_at": {
-          "name": "created_at",
+        "updated_at": {
+          "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
@@ -155,8 +168,7 @@
           "name": "deleted_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": false
         }
       },
       "indexes": {
@@ -164,7 +176,7 @@
           "name": "otp_user_id_idx",
           "columns": [
             {
-              "expression": "userId",
+              "expression": "user_id",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -177,12 +189,12 @@
         }
       },
       "foreignKeys": {
-        "users_otp_userId_users_id_fk": {
-          "name": "users_otp_userId_users_id_fk",
+        "users_otp_user_id_users_id_fk": {
+          "name": "users_otp_user_id_users_id_fk",
           "tableFrom": "users_otp",
           "tableTo": "users",
           "columnsFrom": [
-            "userId"
+            "user_id"
           ],
           "columnsTo": [
             "id"
