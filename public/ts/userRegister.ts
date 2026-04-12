@@ -33,7 +33,8 @@ form.addEventListener('submit', async (e) => {
         const result = await response.json();
 
         if (response.ok) {
-            window.location.href = `users/verify`;
+            const { email } = result.data;
+            window.location.href = `/verify?email=${encodeURIComponent(email)}`;
         } else {
             errorMsg.innerText = result.message || "Registration failed.";
             errorMsg.classList.remove('hidden');

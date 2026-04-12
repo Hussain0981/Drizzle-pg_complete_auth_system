@@ -31,7 +31,6 @@
   "packageManager": "pnpm@10.24.0",
   "dependencies": {
     "@tailwindcss/cli": "^4.2.2",
-    "axios": "^1.15.0",
     "bcrypt": "^6.0.0",
     "connect-pg-simple": "^10.0.0",
     "cookie-parser": "^1.4.6",

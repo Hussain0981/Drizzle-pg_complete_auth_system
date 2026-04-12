@@ -12,7 +12,6 @@ export const createController = async (req: Request, res: Response) => {
     try {
         const payload: User = req.body;
         const user = await createUser(payload);
-        res.redirect(`/verify-otp?email=${encodeURIComponent(req.body.email)}`);
         successResponse(res, user, 'User registered successfully');
 
     } catch (e) {
