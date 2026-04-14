@@ -1,19 +1,25 @@
 import express, { urlencoded } from "express";
+import cookieParser from 'cookie-parser';
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import session from 'express-session';
 import pgSession from 'connect-pg-simple';
 import { ENV } from './config/dotenv'
+import type { Request, Response } from 'express'
+import expressLayouts from 'express-ejs-layouts';
+
 
 // web api
 import webRouters from './router/web/index';
 // api
 import mobileRouter from './router/api/index';
+import { appendFileSync } from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
+app.use(cookieParser());
 
 // solve MIME error css
 app.get('/public/css/output.css', (req, res) => {
@@ -43,10 +49,19 @@ app.use(session({
 
 // ejs setup
 app.set("view engine", "ejs");
-app.set("views", join(__dirname, "views"));
+app.set("views", join(__dirname, "..", "views"));
 
 // public => static files
 app.use(express.static(join(__dirname, "..", "public")));
+
+
+// Add these two lines
+app.use(expressLayouts);
+app.set('layout', 'index');
+
+app.get("/", (req: Request, res: Response) => {
+    res.render("pages/home");
+});
 
 // Web routes
 app.use("/", webRouters);

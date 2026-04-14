@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="/css/output.css">
+</head>
+
+<body class="bg-gray-50 h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-md p-8 bg-white shadow-2xl rounded-2xl">
+        <form id="otpForm" class="space-y-6">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold text-gray-800">Verify OTP</h1>
+                <p class="text-gray-500 mt-2">Enter the 5-digit code sent to your device</p>
+                <p id="error-msg" class="text-red-500 text-sm hidden mt-2"></p>
+                <p id="success-msg" class="text-green-500 text-sm hidden mt-2"></p>
+            </div>
+            <div class="flex justify-between gap-2" id="otpContainer"></div>
+            <div class="flex items-center justify-between w-full">
+                <div id="timing">Time 00:00</div>
+                <div>
+                    <button type="button" id="resendOtpBtn"
+                    class="w-full text-sm text-gray-600 hover:underline font-semibold py-1 rounded-lg transition duration-200 ease-in-out">
+                    Resend OTP
+                </button>
+                </div>
+            </div>
+            <button  type="submit" id="submitBtn"
+                class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200 ease-in-out transform active:scale-[0.98]">
+                Verify Code
+            </button>
+        </form>
+    </div>
+    <script src="/js/otpVerify.js"></script>       
+</body>
+
+</html>

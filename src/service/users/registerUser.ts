@@ -3,7 +3,7 @@ import { eq } from "drizzle-orm";
 import { usersOtp, users } from "../../db/schema/users";
 import { User } from '../../types/user';
 import { hashData, generateOtp } from '../../utils/auth';
-import { sendOtp } from '../../utils/sendOtpToUser'
+import { sendOtp } from '../../utils/sendOtpToUser';
 
 const getOtpExpiry = () => new Date(Date.now() + 10 * 60 * 1000);
 
@@ -11,37 +11,47 @@ export const createUser = async (payload: User) => {
     const { name, email, password } = payload;
     const emailLower = email.toLowerCase();
 
-    const existingUser = await db.select()
-        .from(users)
-        .where(eq(users.email, emailLower))
-        .limit(1);
+    // ── Step 1: Check if user exists ──────────────────────
+    const existingUser = await db.query.users.findFirst({
+        where: eq(users.email, emailLower),
+    });
 
-    // If user exists and is already verified, block registration
-    if (existingUser.length > 0 && existingUser[0].isVerified) {
-        throw new Error('User with this email already exists. Please try to login.');
+    if (existingUser) {
+        const otpData = await db.query.usersOtp.findFirst({
+            where: eq(usersOtp.userId, existingUser.id),
+        });
+
+        // ✅ OTP record exists + isVerified = true → already verified
+        if (otpData?.isVerified) {
+            throw new Error('User already exists and is verified. Please login.');
+        }
+
+        // ✅ OTP record exists + isVerified = false → resend OTP
+        if (otpData && !otpData.isVerified) {
+            const rawOtp = generateOtp();
+            const hashedOtp = await hashData(rawOtp);
+
+            await db.update(usersOtp)
+                .set({
+                    hashedOtp,
+                    otpExpiry: getOtpExpiry(),
+                    retryAttempts: otpData.retryAttempts + 1,
+                    temporaryBlock: false,
+                    blockedUntil: null,
+                })
+                .where(eq(usersOtp.userId, existingUser.id));
+
+            await sendOtp(emailLower, rawOtp);
+
+            const { password: _, ...safeUser } = existingUser;
+            return {
+                ...safeUser,
+                message: 'OTP resent to your email. Please verify your account.',
+            };
+        }
     }
 
-    // If user exists but is NOT verified, resend OTP
-    if (existingUser.length > 0 && !existingUser[0].isVerified) {
-        const userId = existingUser[0].id;
-
-        const rawOtp = generateOtp();
-        const hashedOtp = await hashData(rawOtp);
-
-        // Update existing OTP record
-        await db.update(usersOtp)
-            .set({
-                hashedOtp,
-                otpExpiry: getOtpExpiry(),
-                retryAttempts: (existingUser[0].retryAttempts ?? 0) + 1,
-            })
-            .where(eq(usersOtp.userId, userId));
-
-        await sendOtp(emailLower, rawOtp);
-        return { message: 'OTP resent to your email. Please verify your account.' };
-    }
-
-    // New user registration
+    // ── Step 2: New user registration ─────────────────────
     const hashedPassword = await hashData(password);
 
     return await db.transaction(async (tx) => {
@@ -62,7 +72,11 @@ export const createUser = async (payload: User) => {
         });
 
         await sendOtp(emailLower, rawOtp);
+
         const { password: _, ...safeUser } = newUser;
-        return safeUser;
+        return {
+            ...safeUser,
+            message: 'OTP sent to your email. Please verify your account.',
+        };
     });
 };

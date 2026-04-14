@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Your App</title>
-    <link href="/public/css/output.css" rel="stylesheet">
+    <link href="/css/output.css" rel="stylesheet">
 </head>
 
 <body class="h-full flex items-center justify-center p-4">
@@ -15,9 +15,11 @@
             <div class="mb-8 text-center">
                 <h1 class="text-3xl font-bold text-gray-900">Welcome Back</h1>
                 <p class="text-gray-500 mt-2">Please enter your details to sign in</p>
+                <p class="bg-red-100 text-red-500 bg- mt-2 hidden p-2" id="error-msg"></p>
+                <p class="bg-green-500 text-green-600 mt-2 hidden p-2" id="success-msg"></p>
             </div>
 
-            <form action="/login" method="POST" class="space-y-5">
+            <form id="loginForm" class="space-y-5">
                 <div class="flex flex-col gap-2">
                     <label for="email" class="text-sm font-semibold text-gray-700">Email Address</label>
                     <input
@@ -28,7 +30,7 @@
                 <div class="flex flex-col gap-2">
                     <div class="flex justify-between items-center">
                         <label for="password" class="text-sm font-semibold text-gray-700">Password</label>
-                        <a href="/users/forgot-password" class="text-xs text-blue-600 hover:underline">Forgot password?</a>
+                        <button id="fogot-button" class="text-xs text-blue-600 hover:underline">Forgot password?</button>
                     </div>
                     <input
                         class="w-full border border-gray-300 px-4 py-2.5 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all placeholder:text-gray-400"
@@ -36,7 +38,7 @@
                 </div>
 
                 <div class="pt-2">
-                    <button type="submit"
+                    <button type="submit" id="login-button"
                     class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg mt-4 transition-all shadow-lg active:scale-[0.98]">
                     Sign In
                 </button>
@@ -51,5 +53,5 @@
     </div>
 
 </body>
-    <script src="/public/typescript/userLogin.ts"></script>
+    <script src="/js/userLogin.js"></script>
 </html>

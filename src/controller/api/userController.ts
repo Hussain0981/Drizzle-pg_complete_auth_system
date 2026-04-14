@@ -23,11 +23,21 @@ export const createController = async (req: Request, res: Response) => {
 export const loginController = async (req: Request, res: Response) => {
     try {
         const payload = req.body;
-        const user = await login(payload);
-        successResponse(res, user, 'User logged in successfully');
+        const result = await login(payload);
+
+        // ✅ Set token as httpOnly cookie
+        res.cookie('token', result.token, {
+            httpOnly: true,    // JS can't access it (XSS protection)
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+        });
+
+        const { token: _, ...safeResult } = result;
+        successResponse(res, safeResult, 'Login successful');
 
     } catch (e) {
-        const errorMessage = e instanceof Error ? e.message : 'Failed to login user';
+        const errorMessage = e instanceof Error ? e.message : 'Failed to login';
         failureResponse(res, errorMessage);
     }
 };

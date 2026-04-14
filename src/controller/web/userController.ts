@@ -9,8 +9,7 @@ export const loginController = async (req: Request, res: Response) => {
 };
 
 export const verifyUserController = async (req: Request, res: Response) => {
-    const { email } = req.query;
-    res.render(`users/verify`, { email })
+    res.render(`users/verify`)
 };
 
 export const resendOtpController = async (req: Request, res: Response) => {
