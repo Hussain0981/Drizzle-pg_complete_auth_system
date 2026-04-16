@@ -5,6 +5,7 @@ import { dirname, join } from "path";
 import { initSuperAdmin } from './utils/initAmin'
 // web routes import 
 import webAdminRoute from './router/web/adminRoute'
+import webDashboardRoute from './router/web/dashboardRoute'
 
 // api routes import 
 import apiAdminRoute from './router/api/adminLoginRoute'
@@ -33,7 +34,8 @@ app.set('views', path.join(__dirname, 'views'));
 
 // routes middlewares
 // web
-app.use('/', webAdminRoute)
+app.use('/admin/login', webAdminRoute)
+app.use('/dashboard', webDashboardRoute)
 // api
 app.use('/api/v1/admin', apiAdminRoute)
 
