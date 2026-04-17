@@ -1,11 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Header | Nav bar</title>
 </head>
+
 <body>
-    <div class="h-20 bg-red-300 "></div>
+    <!-- views/shared/theHeader.ejs -->
+    <header class="h-14 bg-white border-b border-slate-200 flex items-center justify-between px-5 flex-shrink-0">
+
+        <!-- Left: Page Title + Breadcrumb -->
+        <div class="flex flex-col justify-center">
+            <h1 class="text-sm font-medium text-slate-800 leading-none">
+                <%= title || 'Dashboard' %>
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">
+                <span>Home</span>
+                <span class="mx-1">/</span>
+                <span class="text-slate-600">
+                    <%= title || 'Dashboard' %>
+                </span>
+            </p>
+        </div>
+
+        <!-- Right: Search + Actions + User -->
+        <div class="flex items-center gap-2">
+
+            <!-- Search -->
+            <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-lg px-3 h-9 w-52">
+                <svg class="w-3.5 h-3.5 text-slate-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="M21 21l-4.35-4.35" />
+                </svg>
+                <input type="text" placeholder="Search medicines..."
+                    class="bg-transparent text-sm text-slate-700 placeholder-slate-400 outline-none w-full" />
+            </div>
+
+            <!-- Notification Bell -->
+            <div class="relative">
+                <button
+                    class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition-colors">
+                    <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                        <path d="M13.73 21a2 2 0 01-3.46 0" />
+                    </svg>
+                </button>
+                <!-- Notification dot -->
+                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+            </div>
+
+            <!-- Dark mode toggle (optional) -->
+            <button
+                class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-slate-50 transition-colors">
+                <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+                </svg>
+            </button>
+
+            <!-- Divider -->
+            <div class="w-px h-6 bg-slate-200 mx-1"></div>
+
+            <!-- User Avatar + Dropdown -->
+            <div class="relative" id="userDropdown">
+                <button onclick="toggleDropdown()"
+                    class="flex items-center gap-2.5 px-2 py-1.5 rounded-lg hover:bg-slate-50 transition-colors">
+                    <div class="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
+                        <span class="text-white text-xs font-medium">AK</span>
+                    </div>
+                    <div class="text-left hidden sm:block">
+                        <p class="text-sm font-medium text-slate-700 leading-none">Admin Khan</p>
+                        <p class="text-xs text-slate-400 mt-0.5">Super Admin</p>
+                    </div>
+                    <svg class="w-3.5 h-3.5 text-slate-400 ml-1" fill="none" stroke="currentColor" stroke-width="2"
+                        viewBox="0 0 24 24">
+                        <path d="M6 9l6 6 6-6" />
+                    </svg>
+                </button>
+
+                <!-- Dropdown Menu -->
+                <div id="dropdownMenu"
+                    class="hidden absolute right-0 top-12 w-48 bg-white border border-slate-200 rounded-xl shadow-lg z-50 overflow-hidden">
+                    <div class="px-4 py-3 border-b border-slate-100">
+                        <p class="text-sm font-medium text-slate-700">Admin Khan</p>
+                        <p class="text-xs text-slate-400 mt-0.5">admin@pharmaos.com</p>
+                    </div>
+                    <div class="py-1">
+                        <a href="/profile"
+                            class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 transition-colors">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="8" r="4" />
+                                <path d="M20 21a8 8 0 10-16 0" />
+                            </svg>
+                            My Profile
+                        </a>
+                        <a href="/settings"
+                            class="flex items-center gap-3 px-4 py-2 text-sm text-slate-600 hover:bg-slate-50 transition-colors">
+                            <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" stroke-width="2"
+                                viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="3" />
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                            </svg>
+                            Settings
+                        </a>
+                    </div>
+                    <div class="border-t border-slate-100 py-1">
+                        <a href="/logout"
+                            class="flex items-center gap-3 px-4 py-2 text-sm text-red-500 hover:bg-red-50 transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                            </svg>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <script>
+        function toggleDropdown() {
+            const menu = document.getElementById('dropdownMenu');
+            menu.classList.toggle('hidden');
+        }
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('userDropdown');
+            if (!dropdown.contains(e.target)) {
+                document.getElementById('dropdownMenu').classList.add('hidden');
+            }
+        });
+    </script>
 </body>
+
 </html>

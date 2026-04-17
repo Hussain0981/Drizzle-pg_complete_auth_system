@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title || 'Pharmacy App' %></title>
-    <link rel="stylesheet" href="/css/output.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title || 'PharmaOS' %></title>
+  <link rel="stylesheet" href="/css/output.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
+<body class="flex h-screen w-full overflow-hidden bg-slate-100 font-['Inter']">
 
-<body class="flex gap-2">
-    <div class="w-sm h-screen">
-        <%- include('../shared/theSidebar') %>
-    </div>
-    <div class="h-full w-full">
-        <%- include('../shared/theHeader') %>
-        <div class="p-2">
-            <%- body %>
-        </div>
-    </div>
+  <%- include('../shared/theSidebar') %>
+
+  <div class="flex flex-col flex-1 overflow-hidden">
+    <%- include('../shared/theHeader') %>
+    <main class="flex-1 overflow-y-auto p-5">
+      <%- body %>
+    </main>
+  </div>
+
 </body>
-
 </html>

@@ -3,6 +3,8 @@ import path from 'path';
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { initSuperAdmin } from './utils/initAmin'
+import expressLayouts from 'express-ejs-layouts';
+
 // web routes import 
 import webAdminRoute from './router/web/adminRoute'
 import webDashboardRoute from './router/web/dashboardRoute'
@@ -29,9 +31,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 // View engine setup
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-
+app.set('layout', 'layouts/index');
+// global middleware
+app.use((req, res, next) => {
+  res.locals.currentPath = req.path;
+  next();
+});
 // routes middlewares
 // web
 app.use('/admin/login', webAdminRoute)
@@ -41,7 +49,7 @@ app.use('/api/v1/admin', apiAdminRoute)
 
 // ============= START SERVER =============
 
-app.listen(PORT, async() => {
+app.listen(PORT, async () => {
     await initSuperAdmin()
     console.log(` Server is running on http://localhost:${PORT}`);
 });

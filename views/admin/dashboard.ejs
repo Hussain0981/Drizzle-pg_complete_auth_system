@@ -1,66 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title || 'Dashboard' %></title>
+    <title>
+        <%= title || 'Dashboard' %>
+    </title>
     <link href="/css/output.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
-    <div class="flex h-screen">
-        <!-- Sidebar -->
-        <div class="w-64 bg-blue-800 text-white">
-            <div class="p-4">
-                <h2 class="text-xl font-bold">Pharmacy Admin</h2>
+
+<body >
+    <!-- Main Content -->
+    <div class="flex-1">
+        <!-- Content -->
+        <main>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-2">Total Medicines</h3>
+                    <p class="text-3xl text-blue-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-2">Today's Sales</h3>
+                    <p class="text-3xl text-green-600">$0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-2">Low Stock</h3>
+                    <p class="text-3xl text-red-600">0</p>
+                </div>
             </div>
-            <nav class="mt-8">
-                <a href="/admin/dashboard" class="block py-2 px-4 hover:bg-blue-700">Dashboard</a>
-                <a href="/admin/medicines" class="block py-2 px-4 hover:bg-blue-700">Medicines</a>
-                <a href="/admin/sales" class="block py-2 px-4 hover:bg-blue-700">Sales</a>
-                <a href="/admin/logout" class="block py-2 px-4 hover:bg-blue-700">Logout</a>
-            </nav>
-        </div>
-        
-        <!-- Main Content -->
-        <div class="flex-1">
-            <!-- Header -->
-            <header class="bg-white shadow">
-                <div class="px-6 py-4">
-                    <h1 class="text-2xl font-bold text-gray-800">Dashboard</h1>
-                </div>
-            </header>
-            
-            <!-- Content -->
-            <main class="p-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-lg font-semibold mb-2">Total Medicines</h3>
-                        <p class="text-3xl text-blue-600">0</p>
-                    </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-lg font-semibold mb-2">Today's Sales</h3>
-                        <p class="text-3xl text-green-600">$0</p>
-                    </div>
-                    <div class="bg-white rounded-lg shadow p-6">
-                        <h3 class="text-lg font-semibold mb-2">Low Stock</h3>
-                        <p class="text-3xl text-red-600">0</p>
-                    </div>
-                </div>
-                
-                <div class="mt-8 bg-white rounded-lg shadow p-6">
-                    <h3 class="text-lg font-semibold mb-4">Welcome, Admin!</h3>
-                    <p>Login successful! Your dashboard is ready.</p>
-                </div>
-            </main>
-        </div>
+
+            <div class="mt-8 bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">Welcome, Admin!</h3>
+                <p>Login successful! Your dashboard is ready.</p>
+            </div>
+        </main>
     </div>
-    
-    <script>
-        // Check if user is logged in
-        const token = localStorage.getItem('token');
-        if (!token) {
-            window.location.href = '/admin/login';
-        }
-    </script>
 </body>
+
 </html>
