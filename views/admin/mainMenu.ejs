@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        Main Menu
+    </title>
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-white rounded-lg shadow p-6 ">
+        <div>
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium text-slate-800">Navigation Settings</h2>
+                <p class="text-sm text-slate-400 mt-1">Manage Main Menu navigation links</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6">
+
+                <form id="form-submition">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+                        <!-- Title -->
+                        <div class="flex flex-col gap-1.5">
+                            <label for="text" class="text-sm font-medium text-slate-700">
+                                Title <span class="text-red-400">*</span>
+                            </label>
+                            <input type="text" id="text" name="title" placeholder="e.g. Dashboard"
+                                class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 px-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                required />
+                            <p class="text-xs text-slate-400">Display name in the sidebar</p>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="flex flex-col gap-1.5">
+                            <label for="orderBy" class="text-sm font-medium text-slate-700">
+                                Order by <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 8v4M12 16h.01" />
+                                    </svg>
+                                </span>
+                                <input type="number" id="orderBy" name="orderBy" placeholder="e.g. 1, 2, 3"
+                                    class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 pl-9 pr-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                    required />
+                            </div>
+                            <p class="text-xs text-slate-400">Icon name from your icon library</p>
+                        </div>
+
+                        <!-- Path -->
+                        <div class="flex flex-col gap-1.5 md:col-span-2">
+                            <label for="path" class="text-sm font-medium text-slate-700">
+                                Path <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">/</span>
+                                <input type="text" id="path" name="path" placeholder="e.g. dashboard, inventory, sales"
+                                    class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 pl-6 pr-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                    required />
+                            </div>
+                            <p class="text-xs text-slate-400">URL path without leading slash</p>
+                        </div>
+
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-slate-100 my-5"></div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center justify-between">
+                        <button type="reset"
+                            class="px-4 py-2 text-sm text-slate-500 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            Reset
+                        </button>
+                        <button type="submit"
+                            class="flex items-center gap-2 px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                            Save Changes
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+        <script>
+            document.getElementById('form-submition').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const btn = this.querySelector('[type="submit"]');
+                btn.disabled = true;
+                btn.innerHTML = `
+      <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+      </svg>
+      Saving...
+    `;
+
+                const data = {
+                    title: document.getElementById('text').value,
+                    icon: document.getElementById('orderBy').value,
+                    path: document.getElementById('path').value,
+                };
+
+                try {
+                    const res = await fetch('/api/v1/main-menu', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    if (res.ok) {
+                        btn.innerHTML = `
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M5 13l4 4L19 7"/>
+          </svg>
+          Saved!
+        `;
+                        btn.classList.replace('bg-emerald-500', 'bg-green-500');
+                        setTimeout(() => {
+                            btn.disabled = false;
+                            btn.classList.replace('bg-green-500', 'bg-emerald-500');
+                            btn.innerHTML = `
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+            Save Changes
+          `;
+                        }, 2000);
+                    }
+                } catch (err) {
+                    console.error(err);
+                    btn.disabled = false;
+                } finally {
+                    btn.disabled = false;
+                    btn.innerHTML = `Save`
+    ;
+                }
+            });
+        </script>
+</body>
+
+</html>

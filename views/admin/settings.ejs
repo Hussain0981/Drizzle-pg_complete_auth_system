@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= settings || 'Settings' %>
+    </title>
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="space-y-6">
+        <div class="bg-white rounded-lg shadow p-6 ">
+            <!-- Page Header -->
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-lg font-medium text-slate-800">Main Menu Settings</h2>
+                    <p class="text-sm text-slate-400 mt-1">Manage sidebar main menu navigation links</p>
+                </div>
+                <div>
+                    <button type="submit" id="mainMenuButton"
+                        class="flex items-center gap-2 px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors">
+                        Add Main Menu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+             <!-- Main Menu Section -->
+    
+
+        </div>
+        <div class="bg-white rounded-lg shadow p-6">
+            <!-- Page Header -->
+            <div class="flex items-center justify-between mb-4">
+                <div>
+                    <h2 class="text-lg font-medium text-slate-800">Sub Menu Settings</h2>
+                    <p class="text-sm text-slate-400 mt-1">Manage sidebar sub menu navigation links</p>
+                </div>
+                <div>
+                    <button type="submit" id="subMenuButton"
+                        class="flex items-center gap-2 px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors">
+                        Add Sub Menu
+                    </button>
+                </div>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6">
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold mb-3">Sub Menus</h3>
+                    <% if (subMenu && subMenu.length> 0) { %>
+                        <ul class="space-y-2">
+                            <% subMenu.forEach(menu=> { %>
+                                <li class="p-3 bg-white rounded-lg shadow">
+                                    <%= menu.name %>
+                                </li>
+                                <% }) %>
+                        </ul>
+                        <% } else { %>
+                            <p class="text-slate-500">No sub menus found</p>
+                            <% } %>
+                </div>
+
+            </div>
+
+        </div>
+        <script>
+            const mainMenuBtn = document.getElementById('mainMenuButton')
+            const subMenuBtn = document.getElementById('subMenuButton')
+
+            subMenuBtn.addEventListener('click', (e) => {
+                window.location.href = "/settings/add-sub-menu";
+            })
+            mainMenuBtn.addEventListener('click', (e) => {
+                window.location.href = "/settings/add-main-menu";
+            })
+        </script>
+</body>
+
+</html>

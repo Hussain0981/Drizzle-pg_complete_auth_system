@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sub Menu</title>
+    <link href="/css/output.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="bg-white rounded-lg shadow p-6">
+        <div>
+            <!-- Page Header -->
+            <div class="mb-6">
+                <h2 class="text-lg font-medium text-slate-800">Navigation Settings</h2>
+                <p class="text-sm text-slate-400 mt-1">Manage sub menu navigation links</p>
+            </div>
+
+            <!-- Form Card -->
+            <div class="bg-white border border-slate-200 rounded-xl p-6">
+                <form id="form-submission">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <!-- Title -->
+                        <div class="flex flex-col gap-1.5">
+                            <label for="title" class="text-sm font-medium text-slate-700">
+                                Title <span class="text-red-400">*</span>
+                            </label>
+                            <input type="text" id="title" name="title" placeholder="e.g. Dashboard"
+                                class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 px-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                required />
+                            <p class="text-xs text-slate-400">Display name in the sidebar</p>
+                        </div>
+
+                        <!-- Icon -->
+                        <div class="flex flex-col gap-1.5">
+                            <label for="icon" class="text-sm font-medium text-slate-700">
+                                Icon <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 8v4M12 16h.01" />
+                                    </svg>
+                                </span>
+                                <input type="text" id="icon" name="icon" placeholder="e.g. home, users, chart"
+                                    class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 pl-9 pr-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                    required />
+                            </div>
+                            <p class="text-xs text-slate-400">Icon name from your icon library</p>
+                        </div>
+
+                        <!-- Order By -->
+                        <div class="flex flex-col gap-1.5">
+                            <label for="orderBy" class="text-sm font-medium text-slate-700">
+                                Order by <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2">
+                                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                        stroke-width="2" viewBox="0 0 24 24">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 8v4M12 16h.01" />
+                                    </svg>
+                                </span>
+                                <input type="number" id="orderBy" name="orderBy" placeholder="e.g. 1, 2, 3"
+                                    class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 pl-9 pr-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                    required />
+                            </div>
+                            <p class="text-xs text-slate-400">Display order in the sidebar</p>
+                        </div>
+
+                        <!-- Parent Menu -->
+                        <div class="flex flex-col gap-1.5">
+                            <label for="parent_id" class="text-sm font-medium text-slate-700">
+                                Parent Menu <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <select id="parent_id" name="parent_id"
+                                    class="w-full border border-slate-200 bg-slate-50 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all">
+                                    <option value="">-- Select Parent Menu --</option>
+
+                                    <% if (mainMenu && mainMenu.data && mainMenu.data.length> 0) { %>
+                                        <% mainMenu.data.forEach(function(menu) { %>
+                                            <option value="<%= menu.id %>">
+                                                <%= menu.title || menu.name || 'Unnamed Menu' %>
+                                            </option>
+                                            <% }); %>
+                                                <% } else { %>
+                                                    <option value="" disabled>No parent menus available</option>
+                                                    <% } %>
+                                </select>
+                            </div>
+                            <p class="text-xs text-slate-400">Select a parent menu for this item</p>
+                        </div>
+
+                        <!-- Path -->
+                        <div class="flex flex-col gap-1.5 md:col-span-2">
+                            <label for="path" class="text-sm font-medium text-slate-700">
+                                Path <span class="text-red-400">*</span>
+                            </label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm font-medium">/</span>
+                                <input type="text" id="path" name="path" placeholder="e.g. dashboard, inventory, sales"
+                                    class="w-full border border-slate-200 bg-slate-50 text-sm text-slate-700 placeholder-slate-400 pl-6 pr-3 py-2.5 rounded-lg outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white transition-all"
+                                    required />
+                            </div>
+                            <p class="text-xs text-slate-400">URL path without leading slash</p>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="border-t border-slate-100 my-5"></div>
+
+                    <!-- Actions -->
+                    <div class="flex items-center justify-between">
+                        <button type="reset"
+                            class="px-4 py-2 text-sm text-slate-500 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors">
+                            Reset
+                        </button>
+                        <button type="submit"
+                            class="flex items-center gap-2 px-5 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition-colors">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M5 13l4 4L19 7" />
+                            </svg>
+                            Save Changes
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <script>
+            // Debug: Log when script loads
+            console.log('=== Script Loaded ===');
+            console.log('Looking for form with id: form-submission');
+
+            // Check if form exists
+            const formElement = document.getElementById('form-submission');
+            console.log('Form element found:', formElement);
+
+            if (!formElement) {
+                console.error('ERROR: Form not found! Check the form ID.');
+            } else {
+                console.log('Form found successfully, attaching event listener...');
+
+                formElement.addEventListener('submit', async function (e) {
+                    console.log('=== SUBMIT EVENT TRIGGERED ===');
+                    e.preventDefault();
+
+                    const submitBtn = this.querySelector('button[type="submit"]');
+                    console.log('Submit button:', submitBtn);
+
+                    const originalBtnHTML = submitBtn.innerHTML;
+
+                    // Disable button and show loading state
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = `
+                        <svg class="w-4 h-4 animate-spin" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4" stroke-linecap="round"/>
+                        </svg>
+                        Saving...
+                    `;
+
+                    // Get form data
+                    const titleValue = document.getElementById('title').value;
+                    const iconValue = document.getElementById('icon').value;
+                    const orderByValue = document.getElementById('orderBy').value;
+                    const parentIdValue = document.getElementById('parent_id').value;
+                    const pathValue = document.getElementById('path').value;
+
+                    console.log('Form values:');
+                    console.log('- Title:', titleValue);
+                    console.log('- Icon:', iconValue);
+                    console.log('- OrderBy:', orderByValue);
+                    console.log('- Parent ID:', parentIdValue);
+                    console.log('- Path:', pathValue);
+
+                    const data = {
+                        title: titleValue,
+                        icon: iconValue,
+                        orderBy: parseInt(orderByValue),
+                        parent_id: parentIdValue || null,
+                        path: pathValue
+                    };
+
+                    console.log('Sending data to API:', data);
+
+                    try {
+                        console.log('Making fetch request to /api/v1/sub-menu...');
+                        const response = await fetch('/api/v1/sub-menu', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        });
+
+                        console.log('Response status:', response.status);
+                        console.log('Response OK?', response.ok);
+
+                        const result = await response.json();
+                        console.log('Response data:', result);
+
+                        if (response.ok) {
+                            console.log('Success! Menu saved successfully');
+                            // Success state
+                            submitBtn.innerHTML = `
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                    <path d="M5 13l4 4L19 7" />
+                                </svg>
+                                Saved!
+                            `;
+                            submitBtn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
+                            submitBtn.classList.add('bg-green-500', 'hover:bg-green-600');
+
+                            // Reset form after success
+                            setTimeout(() => {
+                                document.getElementById('form-submission').reset();
+                            }, 500);
+
+                            // Reset button after 2 seconds
+                            setTimeout(() => {
+                                submitBtn.disabled = false;
+                                submitBtn.classList.remove('bg-green-500', 'hover:bg-green-600');
+                                submitBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+                                submitBtn.innerHTML = originalBtnHTML;
+                            }, 2000);
+                        } else {
+                            console.error('Server returned error:', result);
+                            throw new Error(result.message || 'Failed to save menu');
+                        }
+                    } catch (error) {
+                        console.error('=== ERROR CAUGHT ===');
+                        console.error('Error object:', error);
+                        console.error('Error message:', error.message);
+
+                        // Show error state
+                        submitBtn.innerHTML = `
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                                <path d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                            Error!
+                        `;
+                        submitBtn.classList.remove('bg-emerald-500', 'hover:bg-emerald-600');
+                        submitBtn.classList.add('bg-red-500', 'hover:bg-red-600');
+
+                        // Reset button after 2 seconds
+                        setTimeout(() => {
+                            submitBtn.disabled = false;
+                            submitBtn.classList.remove('bg-red-500', 'hover:bg-red-600');
+                            submitBtn.classList.add('bg-emerald-500', 'hover:bg-emerald-600');
+                            submitBtn.innerHTML = originalBtnHTML;
+                        }, 2000);
+
+                        // Show error message to user
+                        alert('Failed to save menu: ' + error.message);
+                    }
+                });
+
+                console.log('Event listener attached successfully!');
+            }
+        </script>
+    </div>
+</body>
+
+</html>

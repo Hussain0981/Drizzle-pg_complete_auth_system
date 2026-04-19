@@ -1,0 +1,1 @@
+ALTER TABLE "main_menu" ADD COLUMN "is_active" boolean DEFAULT true;

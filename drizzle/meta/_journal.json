@@ -5,22 +5,15 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1775390173840,
-      "tag": "0000_funny_xavin",
+      "when": 1776486748802,
+      "tag": "0000_misty_sunfire",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1776312408999,
-      "tag": "0001_long_firestar",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1776314129664,
-      "tag": "0002_eminent_arclight",
+      "when": 1776562853888,
+      "tag": "0001_open_carlie_cooper",
       "breakpoints": true
     }
   ]

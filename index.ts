@@ -8,9 +8,12 @@ import expressLayouts from 'express-ejs-layouts';
 // web routes import 
 import webAdminRoute from './router/web/adminRoute'
 import webDashboardRoute from './router/web/dashboardRoute'
+import webSettingsRoute from './router/web/settingRoute'
 
 // api routes import 
 import apiAdminRoute from './router/api/adminLoginRoute'
+import apiAdminSubmenuSettings from './router/api/adminSubmenuRoute'
+import apiAdminMenuSettings from './router/api/adminMenuRoute'
 
 
 const app = express();
@@ -44,8 +47,11 @@ app.use((req, res, next) => {
 // web
 app.use('/admin/login', webAdminRoute)
 app.use('/dashboard', webDashboardRoute)
+app.use('/settings', webSettingsRoute)
 // api
 app.use('/api/v1/admin', apiAdminRoute)
+app.use('/api/v1/sub-menu', apiAdminSubmenuSettings)
+app.use('/api/v1/main-menu', apiAdminMenuSettings)
 
 // ============= START SERVER =============
 

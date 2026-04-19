@@ -1,6 +1,6 @@
 {
-  "id": "0367b13b-deda-4ac2-a291-f067fb377894",
-  "prevId": "ba53217f-23fd-47c6-813b-3ba2d70d69ec",
+  "id": "8f3273a7-3853-4e5c-9030-b193e5ecd46e",
+  "prevId": "a342cd1e-b2a8-410e-b424-c1fe1acda2e7",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -39,7 +39,7 @@
           "typeSchema": "public",
           "primaryKey": false,
           "notNull": true,
-          "default": "'Admin'"
+          "default": "'super_admin'"
         },
         "created_at": {
           "name": "created_at",
@@ -81,6 +81,177 @@
           "nullsNotDistinct": false,
           "columns": [
             "email"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.main_menu": {
+      "name": "main_menu",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "order_by": {
+          "name": "order_by",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "main_menu_order_by_unique": {
+          "name": "main_menu_order_by_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "order_by"
+          ]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.sub_menu": {
+      "name": "sub_menu",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "path": {
+          "name": "path",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "icon": {
+          "name": "icon",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": true
+        },
+        "requires_auth": {
+          "name": "requires_auth",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "roles": {
+          "name": "roles",
+          "type": "varchar(500)[]",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order_by": {
+          "name": "order_by",
+          "type": "serial",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "main_menu_id": {
+          "name": "main_menu_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "sub_menu_main_menu_id_main_menu_id_fk": {
+          "name": "sub_menu_main_menu_id_main_menu_id_fk",
+          "tableFrom": "sub_menu",
+          "tableTo": "main_menu",
+          "columnsFrom": [
+            "main_menu_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "sub_menu_order_by_unique": {
+          "name": "sub_menu_order_by_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "order_by"
           ]
         }
       },
@@ -299,8 +470,7 @@
       "name": "admin_role",
       "schema": "public",
       "values": [
-        "Admin",
-        "User"
+        "super_admin"
       ]
     },
     "public.user_role": {
