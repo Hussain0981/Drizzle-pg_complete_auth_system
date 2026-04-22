@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="/css/output.css">
+    <title>
+        <%= title || 'Dashboard' %>
+    </title>
+    <link href="/css/output.css" rel="stylesheet">
 </head>
-<body>
-    <div class="text-xl font-semibold text-green">
-        The Home page
+
+<body >
+    <!-- Main Content -->
+    <div class="flex-1">
+        <!-- Content -->
+        <main>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-2">Total Users</h3>
+                    <p class="text-3xl text-blue-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-2">Active Users</h3>
+                    <p class="text-3xl text-green-600">0</p>
+                </div>
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-lg font-semibold mb-2">Blocked Users</h3>
+                    <p class="text-3xl text-red-600">0</p>
+                </div>
+            </div>
+
+            <div class="mt-8 bg-white rounded-lg shadow p-6">
+                <h3 class="text-lg font-semibold mb-4">Welcome, Admin!</h3>
+                <p>Login successful! Your dashboard is ready.</p>
+            </div>
+        </main>
     </div>
 </body>
+
 </html>

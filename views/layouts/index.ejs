@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title || 'PharmaOS' %></title>
   <link rel="stylesheet" href="/css/output.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
 </head>
-<body class="flex h-screen w-full overflow-hidden bg-slate-100 font-['Inter']">
+<body class="flex h-screen w-full overflow-hidden bg-slate-100">
 
-  <%- include('../shared/theSidebar') %>
-
+  
   <div class="flex flex-col flex-1 overflow-hidden">
-    <%- include('../shared/theHeader') %>
+    <%- include('../partials/theHeader') %>
     <main class="flex-1 overflow-y-auto p-5">
-      <%- body %>
+      <%- body %> 
     </main>
   </div>
 
 </body>
-</html>
+</html> 

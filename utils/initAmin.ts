@@ -25,8 +25,8 @@ export async function initSuperAdmin() {
                 password: hashedPassword,
                 name: "Hussain Ullah",
                 role: "super_admin",
-                created_at: new Date(),
-                updated_at: new Date()
+                createdAt: new Date(),
+                updatedAt: new Date()
             });
             
             console.log("Super admin created successfully");
